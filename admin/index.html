@@ -1,0 +1,40 @@
+<!doctype html><html lang="en" dir="ltr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Content Manager — Karam Isaid</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+<script defer src="../supabase-config.js"></script>
+<script defer src="../config.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script defer src="../cms-core.js"></script>
+<script defer src="../cms-section-definitions.js"></script>
+<script defer src="admin.js"></script>
+</head><body>
+<div class="login-layout" id="loginLayout"><div class="login-brand"><span class="brand-tag">PRIVATE WORKSPACE / 2026</span><span class="login-mark"><span class="login-letter-original">K<span>.</span></span><img class="login-letter-editorial" src="../assets/karam-ki-mark.svg" alt=""></span><span class="login-personal-name">KARAM ISAID <small>DIGITAL × CREATIVE</small></span><h1>Your work.<br><em>Your space.</em></h1><p>One elegant home for your projects, content, media and clients.</p><div class="login-art"><span>STRATEGY</span><span>✳</span><span>CREATIVITY</span></div></div>
+<div class="login-area"><div class="login-panel"><div class="eyebrow">KARAM ISAID / CONTENT MANAGER</div><h2>Welcome back<span class="wine">.</span></h2><p>Sign in with the admin account you authorized in Supabase.</p>
+<div id="setupWarning" class="setup-alert" hidden>Supabase connection is not configured. Open <code>supabase-config.js</code> and add your Project URL and publishable key. Then follow <code>SETUP_AR.md</code>.</div>
+<form id="loginForm"><label>Email address<input type="email" id="loginEmail" required autocomplete="username" placeholder="you@example.com"></label><label>Password<input type="password" id="loginPassword" required autocomplete="current-password" minlength="6" placeholder="Your password"></label><button class="btn primary wide" id="loginSubmit">Sign in <span>↗</span></button><p class="message" id="loginError" role="alert"></p></form><div class="login-note">Your data is protected by Supabase Auth + database Row Level Security. No passwords are stored in the site files.</div></div></div></div>
+<div id="adminShell" class="app" hidden>
+<aside class="sidebar"><a class="admin-logo" href="../index.html"><span class="brand-icon"><span class="logo-original">K.</span><img class="logo-editorial" src="../assets/karam-ki-mark.svg" alt=""></span><span>KARAM <b>ISAID</b><small>CONTENT STUDIO</small></span></a>
+<div class="nav-caption">WORKSPACE</div><nav id="nav" class="side-nav">
+<button data-view="overview" class="active"><span>◈</span> Overview</button>
+<button data-view="projects"><span>▦</span> Projects <i id="projectCount"></i></button>
+<button data-view="services"><span>✳</span> Services</button>
+<button data-view="brandAssets"><span>◧</span> Original brand & reels</button>
+<button data-view="media"><span>▧</span> Media Library</button>
+<button data-view="settings"><span>⚙</span> Global Settings</button>
+<button data-view="appearance"><span>🎨</span> Appearance & Colors</button>
+<button data-view="sections"><span>▤</span> Website Sections</button>
+<button data-view="portfolioSections"><span>◫</span> Portfolio Sections</button>
+<button data-view="inquiries"><span>✉</span> Client Inquiries <i id="inquiryCount"></i></button>
+</nav><div class="sidebar-bottom"><div class="sidebar-hint"><span class="live-dot"></span> Supabase Cloud CMS <small>Draft → Publish → Live</small></div><button id="logout" class="logout">↪ Sign out</button></div></aside>
+<div class="workspace"><header class="topbar"><div class="topbar-start"><button class="menu-btn" id="menuButton" aria-label="Toggle menu">☰</button><a class="topbar-brand" href="../index.html" aria-label="Karam Isaid — main website"><span class="topbar-mark"><span class="logo-original">K.</span><img class="logo-editorial" src="../assets/karam-ki-mark.svg" alt=""></span><span class="topbar-name"><strong>Karam Isaid</strong><small>CONTENT STUDIO</small></span></a><span id="breadcrumb">STUDIO / OVERVIEW</span></div><div class="top-actions"><a href="../index.html" target="_blank" rel="noopener">View website ↗</a><a href="../portfolio/index.html" target="_blank" rel="noopener" id="portfolioNav">Portfolio ↗</a><span class="avatar">KI</span></div></header>
+<main id="view" class="view" aria-live="polite"></main></div></div>
+<dialog id="sectionEditorDialog" class="editor-dialog section-editor-dialog"><div class="modal-bar"><div><span class="eyebrow">DETAILED SECTION EDITOR</span><h2 id="sectionEditorTitle">Edit section</h2></div><button class="icon-btn" id="closeSectionEditor" type="button" aria-label="Close section editor">×</button></div><form id="sectionEditorForm" class="editor-form"><div id="sectionEditorFields"></div><div class="modal-actions"><button type="button" class="btn secondary" id="sectionSaveDraft">Save draft</button><button type="button" class="btn secondary" id="sectionPreview">Preview draft</button><button type="submit" class="btn primary" id="sectionPublish">Publish section ↗</button></div><p id="sectionEditorMessage" class="message" role="status"></p></form></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<dialog id="editorDialog" class="editor-dialog"><div class="modal-bar"><div><span class="eyebrow" id="editorKicker">EDITOR</span><h2 id="editorHeading">Edit content</h2></div><button class="icon-btn" id="closeEditor" aria-label="Close editor">×</button></div><form id="editorForm" class="editor-form"><div id="editorFields"></div><div class="modal-actions"><button type="button" class="btn secondary" id="saveDraft">Save draft</button><button type="button" class="btn secondary" id="contentPreview">Preview draft</button><button type="button" class="btn secondary" id="unpublishContent" hidden>Unpublish</button><button type="submit" class="btn primary" id="savePublish">Publish changes ↗</button></div><p class="message" id="editorMessage" role="status"></p></form></dialog>
+<dialog id="mediaDialog" class="editor-dialog media-picker"><div class="modal-bar"><div><span class="eyebrow">ASSET PICKER</span><h2>Choose a file</h2></div><button class="icon-btn" id="closeMediaPicker" aria-label="Close media picker">×</button></div><div id="pickerGrid" class="media-grid"></div></dialog>
+</body></html>

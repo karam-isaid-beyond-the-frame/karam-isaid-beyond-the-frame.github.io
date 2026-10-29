@@ -1,0 +1,10 @@
+@font-face{font-family:Karam Bodoni;src:url('assets/brand/fonts/BodoniModa.woff2') format('woff2');font-weight:400 900;font-display:swap}
+@font-face{font-family:Karam Amiri;src:url('assets/brand/fonts/Amiri-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+.original-brand-image{display:block;object-fit:contain;max-width:100%}
+.original-brand-image.wordmark{width:156px;height:50px}
+.original-brand-image.monogram{width:48px;height:52px}
+.hero-signoff{font-family:Karam Bodoni,Georgia,serif;font-style:italic;font-weight:450}
+html[lang=ar] .hero-signoff{font-family:Karam Amiri,serif;font-style:normal}
+/* Private preview notice must not cover the language/menu controls. */
+html[data-cms-preview=true] .site-header{position:relative!important}
+@media(max-width:600px){.original-brand-image.wordmark{width:127px;height:43px}}

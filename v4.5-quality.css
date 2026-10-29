@@ -1,0 +1,3 @@
+.ki-service-cover{width:100%;height:126px;object-fit:cover;border-radius:12px;margin-bottom:15px;border:1px solid rgba(255,255,255,.13)}
+.ki-price-card:has(.ki-service-cover){padding-top:19px}
+#healthReport{margin-block:22px}#healthReport h2{margin:0 0 15px}#healthReport p{margin:7px 0;font-size:14px}

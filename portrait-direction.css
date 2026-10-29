@@ -1,0 +1,100 @@
+/* Portrait-led direction: original photography, monumental name, open work archive.
+   Theme colors and every CMS binding remain owned by the existing site. */
+.portrait-direction{--portrait-paper:var(--text);--portrait-ink:var(--bg);--portrait-gap:clamp(24px,5vw,80px)}
+.portrait-direction .shell,.portrait-direction .container{max-width:1600px;padding-inline:var(--portrait-gap)}
+.portrait-direction .site-header{position:relative!important}
+.portrait-direction .site-header .header-inner,.portrait-direction .nav-shell{height:96px}
+.portrait-direction .site-header .desktop-nav{gap:26px}
+.portrait-direction .site-header .desktop-nav a{font-size:14px;color:var(--text)}
+.portrait-direction .header-work,.portrait-direction .nav-cta{background:none!important;color:var(--text)!important;border-radius:0!important;padding-inline:4px!important}
+.portrait-direction .hero.shell,.portrait-direction .hero.container{display:grid!important;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)!important;gap:0 var(--portrait-gap);padding-top:24px!important;padding-bottom:0!important;min-height:0!important;position:relative;overflow:hidden!important;isolation:isolate}
+.portrait-direction .hero-left,.portrait-direction .hero-copy{align-self:center;padding:30px 0 54px!important;z-index:2;min-width:0}
+.portrait-direction .hero .hero-intro{font-size:16px!important;letter-spacing:0!important;margin:0 0 25px!important;color:var(--muted)!important;text-transform:none!important}
+.portrait-direction .hero .hero-intro strong{display:none}
+.portrait-direction .hero .ki-v43-headline,.portrait-direction .hero-copy h1{font-size:clamp(40px,4.2vw,68px)!important;font-weight:500!important;line-height:1.07!important;letter-spacing:-.055em!important;margin:0 0 25px!important;max-width:650px!important}
+.portrait-direction .hero .ki-v43-headline em{display:inline!important}
+.portrait-direction .hero .ki-hero-subline{font-size:13px!important;line-height:1.6!important;max-width:340px;letter-spacing:0!important;color:var(--text)!important}
+.portrait-direction .hero .hero-descr,.portrait-direction .hero-description{font-size:16px!important;line-height:1.7!important;max-width:410px!important;margin:0 0 30px!important;color:var(--muted)!important}
+.portrait-direction .hero .hero-buttons,.portrait-direction .hero-cta-row{margin:0;gap:12px;flex-wrap:wrap}
+.portrait-direction .hero .btn,.portrait-direction .hero .button{border-radius:999px!important;min-height:54px;font-size:14px!important;padding:16px 23px!important}
+.portrait-direction .hero .btn-primary,.portrait-direction .hero .button-primary{background:var(--text)!important;color:var(--bg)!important}
+.portrait-direction .hero .btn-secondary,.portrait-direction .hero .button-outline{background:transparent!important;color:var(--text)!important;border:1px solid var(--line)!important}
+.portrait-direction .hero-right.creative-hero,.portrait-direction .hero-art#kiPortfolioHeroArt{align-self:stretch!important;min-width:0;width:100%!important;height:clamp(440px,44vw,660px)!important;min-height:0!important;margin:0!important;border-radius:0!important;background:var(--portrait-paper)!important;overflow:hidden!important}
+.portrait-direction .hero-right .creative-hero-stage{height:100%!important;inset:0!important;position:relative!important;border-radius:0!important;background-color:var(--portrait-paper)!important}
+.portrait-direction #creativeHeroPortrait,.portrait-direction #kiPortfolioHeroPortrait{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 15%!important;border-radius:0!important;transform:none!important;filter:none!important;opacity:1!important;mix-blend-mode:normal!important}
+.portrait-direction .hero-art::after,.portrait-direction .hero-art::before{display:none!important}
+.portrait-direction .hero-signature,.portrait-direction .ki-portfolio-name{grid-column:1/-1;position:relative;inset:auto!important;display:block!important;font-size:clamp(72px,13.1vw,210px)!important;font-weight:500!important;line-height:1.1!important;letter-spacing:-.075em!important;margin:24px 0 0!important;padding:0 0 24px!important;white-space:nowrap;color:var(--text)!important;text-align:center!important;max-width:100%!important;text-transform:none!important;pointer-events:none}
+.portrait-direction .hero-copy .eyebrow,.portrait-direction .hero-bottom,.portrait-direction .hero-scroll{display:none!important}
+.portrait-direction #showreel{background:var(--bg)!important}
+.portrait-direction .section,.portrait-direction .v2-section,.portrait-direction .section-space,.portrait-direction #ki-featured-carousel.ki-featured-carousel.shell{padding-block:clamp(64px,8vw,128px)!important}
+.portrait-direction h2{font-weight:500!important;letter-spacing:-.055em!important;font-size:clamp(36px,4.7vw,72px)!important}
+.portrait-direction .ki-section-top,.portrait-direction .v2-section-heading,.portrait-direction .section-heading{margin-bottom:48px}
+.portrait-direction .ki-carousel-empty{background:transparent!important;padding:26px 0!important;max-width:700px}
+.portrait-direction .ki-carousel-empty h3{font-weight:450;font-size:clamp(27px,3vw,44px)}
+.portrait-direction .ki-carousel-empty a{background:transparent!important;padding-inline:0!important;text-decoration:underline;text-underline-offset:7px}
+.portrait-direction .ki-carousel-track{gap:36px}
+.portrait-direction .ki-showcase-card{flex-basis:clamp(280px,39vw,600px)}
+.portrait-direction .ki-card-photo{aspect-ratio:4/5;border-radius:0!important}
+.portrait-direction .ki-card-meta strong{font-size:clamp(24px,2.4vw,36px);font-weight:500}
+.portrait-direction .projects-grid,.portrait-direction .ki-selected-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:64px 36px}
+.portrait-direction .project-card,.portrait-direction .ki-work-tile{background:transparent!important;border-radius:0!important;overflow:visible}
+.portrait-direction .project-art{aspect-ratio:4/3;min-height:0;height:auto!important}
+.portrait-direction .project-info{padding:24px 0!important}
+.portrait-direction .project-info h3{font-weight:500;font-size:clamp(26px,2.6vw,40px)}
+.portrait-direction .specialties-section,.portrait-direction .expertise-section{background:var(--portrait-paper)!important;color:var(--portrait-ink)!important}
+.portrait-direction .specialties-section h2,.portrait-direction .expertise-section h2{color:var(--portrait-ink)!important}
+.portrait-direction .specialties-section h2 .soft-text{color:var(--portrait-ink)!important}
+.portrait-direction .specialties-section .section-heading p,.portrait-direction .expertise-section .section-heading p{color:#5b5359!important}
+.portrait-direction .specialties,.portrait-direction .expertise-grid{gap:48px}
+.portrait-direction .specialties-section .specialty-card,.portrait-direction .expertise-section .expertise-card{background:transparent!important;border:0!important;border-radius:0!important;padding:0!important;min-height:0!important}
+.portrait-direction .specialty-card h3,.portrait-direction .expertise-card h3{color:var(--portrait-ink)!important;font-weight:500;font-size:clamp(24px,2.3vw,36px);max-width:300px}
+.portrait-direction .specialty-card p,.portrait-direction .expertise-card p{color:#5b5359!important;font-size:16px!important}
+.portrait-direction .cms-service-price,.portrait-direction .specialty-card .text-cta,.portrait-direction .expertise-card .text-cta{color:var(--portrait-ink)!important}
+.portrait-direction .specialty-card .text-cta,.portrait-direction .expertise-card .text-cta{border:0;text-decoration:underline;text-underline-offset:6px}
+.portrait-direction .cms-service-image{border-radius:0}
+.portrait-direction .about-grid{gap:var(--portrait-gap);grid-template-columns:.85fr 1.15fr}
+.portrait-direction .about-copy .section-lead{font-size:clamp(24px,2.8vw,42px)!important;font-weight:400;line-height:1.4!important}
+.portrait-direction .process-list{gap:40px}
+.portrait-direction .process-list h3{font-weight:500;font-size:25px}
+.portrait-direction .ki-price-card{background:transparent!important;border:0!important;border-radius:0;padding:0;min-height:0!important}
+.portrait-direction .ki-price-card a{color:var(--text)!important;border:0!important;text-decoration:underline;text-underline-offset:7px}
+.portrait-direction .ki-price-card h3{font-weight:500}
+.portrait-direction .ki-price-amount{font-size:30px;font-weight:500}
+.portrait-direction .brief-layout{background:transparent!important;border-radius:0!important;padding:0!important;gap:var(--portrait-gap)}
+.portrait-direction .brief-form{border-radius:0;background:var(--bg2);padding:32px}
+.portrait-direction .connect-section,.portrait-direction .contact-section{background:var(--bg)!important}
+.portrait-direction .connect-heading h2,.portrait-direction .contact-inner h2{font-size:clamp(52px,7.6vw,118px)!important;font-weight:500!important;letter-spacing:-.06em!important}
+.portrait-direction .social-card{background:transparent!important;padding-inline:0!important;min-height:100px}
+.portrait-direction .filter-row{gap:8px;flex-wrap:wrap}
+.portrait-direction .filter-btn{border-radius:999px!important;padding:12px 18px!important}
+.portrait-direction .filter-btn.active{background:var(--text)!important;color:var(--bg)!important}
+.portrait-direction .site-footer{padding-block:20px}
+.portrait-direction [dir=rtl],html[dir=rtl] .portrait-direction{font-family:Tajawal,Manrope,sans-serif!important}
+html[dir=rtl] .portrait-direction .hero-signature,html[dir=rtl] .portrait-direction .ki-portfolio-name{font-size:clamp(76px,15vw,240px)!important;letter-spacing:-.025em!important;line-height:1.35!important;padding-bottom:16px!important}
+html[dir=rtl] .portrait-direction h1,html[dir=rtl] .portrait-direction h2{letter-spacing:-.025em!important;line-height:1.2!important}
+@media(min-width:1000px){.portrait-direction .projects-grid>.project-card:nth-child(even){margin-top:90px}.portrait-direction .hero.container .hero-copy{order:0}.portrait-direction .hero.container .hero-art{order:1}.portrait-direction .hero.container .ki-portfolio-name{order:2}}
+@media(max-width:1000px){.portrait-direction .desktop-nav{gap:14px!important}.portrait-direction .hero.shell,.portrait-direction .hero.container{column-gap:30px}.portrait-direction .hero .ki-v43-headline,.portrait-direction .hero-copy h1{font-size:42px!important}.portrait-direction .hero-right.creative-hero,.portrait-direction .hero-art#kiPortfolioHeroArt{height:510px!important}.portrait-direction .specialties,.portrait-direction .expertise-grid{gap:30px}.portrait-direction .process-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+ .portrait-direction{--portrait-gap:22px}
+ .portrait-direction .site-header .header-inner,.portrait-direction .nav-shell{height:78px}
+ .portrait-direction .hero.shell,.portrait-direction .hero.container{grid-template-columns:minmax(0,1fr)!important;padding-top:10px!important}
+ .portrait-direction .hero-left,.portrait-direction .hero-copy{padding:20px 0 34px!important}
+ .portrait-direction .hero .hero-intro{margin-bottom:18px!important;font-size:14px!important}
+ .portrait-direction .hero .ki-v43-headline,.portrait-direction .hero-copy h1{font-size:43px!important;line-height:1.08!important;margin-bottom:18px!important}
+ .portrait-direction .hero .hero-descr,.portrait-direction .hero-description{font-size:15px!important;line-height:1.65!important;margin-bottom:22px!important}
+ .portrait-direction .hero .ki-hero-subline{font-size:12px!important;margin-bottom:14px!important}
+ .portrait-direction .hero .btn,.portrait-direction .hero .button{padding:13px 18px!important;min-height:48px;font-size:13px!important}
+ .portrait-direction .hero-right.creative-hero,.portrait-direction .hero-art#kiPortfolioHeroArt{height:auto!important;aspect-ratio:1/1;min-height:0!important}
+ .portrait-direction .hero-signature,.portrait-direction .ki-portfolio-name{font-size:12.6vw!important;letter-spacing:-.07em!important;margin-top:18px!important;padding-bottom:0!important;order:3}
+ html[dir=rtl] .portrait-direction .hero-signature,html[dir=rtl] .portrait-direction .ki-portfolio-name{font-size:17vw!important;line-height:1.4!important;padding-bottom:0!important}
+ .portrait-direction .ki-section-top,.portrait-direction .v2-section-heading,.portrait-direction .section-heading{margin-bottom:30px;gap:20px}
+ .portrait-direction .specialties,.portrait-direction .expertise-grid,.portrait-direction .projects-grid,.portrait-direction .ki-selected-grid{grid-template-columns:1fr;gap:42px}
+ .portrait-direction .specialty-card h3,.portrait-direction .expertise-card h3{max-width:none;font-size:30px}
+ .portrait-direction .about-grid{grid-template-columns:1fr;gap:24px}
+ .portrait-direction .process-list{grid-template-columns:1fr;gap:30px}
+ .portrait-direction .brief-form{padding:24px 18px}
+ .portrait-direction .hero.container .hero-art{order:1}
+ .portrait-direction .hero.container .ki-portfolio-name{order:2}
+ .portrait-direction .hero.container .hero-copy{order:0}
+}
+@media(prefers-reduced-motion:no-preference){.portrait-direction .hero-signature{animation:portrait-arrive .7s ease-out both}@keyframes portrait-arrive{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}}

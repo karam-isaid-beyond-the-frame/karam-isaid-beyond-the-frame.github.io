@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /work/
+Disallow: /tests/
+Disallow: /supabase/
+Disallow: /*?cms-preview=1

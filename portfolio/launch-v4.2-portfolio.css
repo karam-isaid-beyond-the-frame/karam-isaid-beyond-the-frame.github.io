@@ -1,0 +1,14 @@
+#insights[hidden]{display:none!important}
+.ki-project-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:16px 0}
+.ki-project-gallery img{display:block;width:100%;height:220px;object-fit:cover;border-radius:12px;background:#151c23}
+
+.ki-comparisons{grid-template-columns:repeat(2,minmax(0,1fr));}
+.ki-comparisons figure{margin:0}.ki-comparisons img{height:auto;aspect-ratio:3/4}.ki-comparisons figcaption{font-size:11px;letter-spacing:.16em;padding-top:8px;color:#bce9d8}
+/* Portfolio shares the cinematic hero direction and swipable project carousel. */
+.ki-portfolio-name{font-weight:900;letter-spacing:-.082em;line-height:.95;font-size:clamp(54px,6.3vw,98px);margin:14px 0 20px;color:#f5f1e9}
+.hero-copy #heroTitle{font-size:clamp(28px,3vw,47px);line-height:1.18;letter-spacing:-.05em}
+#kiPortfolioHeroArt.ki-has-portrait{background:linear-gradient(125deg,#33252b,#0b1118);border-radius:23px;border:1px solid rgba(255,255,255,.18);overflow:hidden;min-height:530px;box-shadow:0 30px 75px #0004}
+#kiPortfolioHeroArt.ki-has-portrait>*:not(#kiPortfolioHeroPortrait){display:none!important}
+#kiPortfolioHeroPortrait{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;z-index:6}
+.ki-portfolio-carousel{margin-block:90px 125px}
+@media(max-width:800px){.ki-portfolio-name{font-size:clamp(50px,12vw,85px)}.ki-portfolio-carousel{margin-block:70px 85px}#kiPortfolioHeroArt.ki-has-portrait{min-height:440px}}

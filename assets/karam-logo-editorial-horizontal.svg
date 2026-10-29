@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="250" viewBox="0 0 900 250" role="img" aria-label="Karam Isaid — Digital x Creative">
+<title>Karam Isaid — Editorial KI concept</title>
+<rect width="900" height="250" rx="24" fill="#FAF7F2"/>
+<rect x="32" y="32" width="185" height="185" rx="32" fill="#752840"/>
+<path d="M75 76v100M129 76 92 125l39 51" fill="none" stroke="#FFFAF4" stroke-width="15" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M165 77v99" fill="none" stroke="#F2C8D4" stroke-width="15" stroke-linecap="square"/>
+<circle cx="189" cy="65" r="8" fill="#F2C8D4"/>
+<text x="256" y="112" font-family="Lato,Arial,sans-serif" font-weight="900" font-size="75" fill="#292027" letter-spacing="1">KARAM ISAID</text>
+<path d="M261 141H853" stroke="#D6C8CA" stroke-width="2"/>
+<text x="262" y="182" font-family="Lato,Arial,sans-serif" font-size="25" letter-spacing="7" font-weight="700" fill="#752840">DIGITAL  ×  CREATIVE</text>
+</svg>

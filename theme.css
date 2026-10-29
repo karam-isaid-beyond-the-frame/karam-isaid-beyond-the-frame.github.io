@@ -1,0 +1,100 @@
+/* Shared design system for home and portfolio: JS supplies the palette variables. */
+:root {
+  --bg: #faf7f2; --bg2: #f3ece7; --panel: #ffffff; --panel2: #f4edeb;
+  --text: #2c1c23; --muted: #72606a; --subtle: #957f89;
+  --mint: #78263e; --mintdark: #5b1b30; --blue: #78263e;
+  --line: rgba(120,38,62,.19);
+  --theme-contrast: #ffffff; --theme-accent-soft: #f4e7eb;
+  --theme-nav: rgba(250,247,242,.91); --theme-grad: #f4ebea;
+  --theme-card: #ffffff; --theme-poster-deep: #2a1320;
+  --theme-poster-bright: #92354f; --theme-font: Manrope;
+  --theme-radius: 14px; --theme-shadow: rgba(43,21,30,.08);
+  color-scheme: light;
+}
+body {background:var(--bg);color:var(--text);font-family:var(--theme-font),Tajawal,Arial,sans-serif}
+html[lang=ar] body {font-family:Tajawal,var(--theme-font),sans-serif}
+/* Nav / controls / shared headings */
+.site-header, .site-header.scrolled {background:var(--theme-nav)!important;border-bottom:1px solid var(--line)}
+.desktop-nav a,.brand-name>span,.brand-name small,.brand-txt small,.mobile-nav a,.lang-switch,.hero-intro,.hero-description,.hero-descr,.section-heading p,.hero-categories,.scroll-cue,.hero-scroll,.hero-bottom{color:var(--muted)}
+.desktop-nav a:hover,.mobile-nav a:hover,.brand-icon span,.brand-dot,.brand-mark span {color:var(--mint)}
+.menu-button span,.menu-toggle span{background:var(--text)}
+.header-work,.nav-cta,.btn-primary,.button-primary,.upload-button,.filter-btn.active,.chart-option.active {background:var(--mint);color:var(--theme-contrast);border-color:var(--mint)}
+.header-work:hover,.nav-cta:hover,.btn-primary:hover,.button-primary:hover,.upload-button:hover {background:var(--mintdark);color:var(--theme-contrast)}
+.btn-secondary,.button-outline,.reset-button{color:var(--text);border-color:var(--line);background:var(--theme-card)}
+.hero-intro strong,.about-copy .section-lead,.about-lead,.hero h1,.hero-copy h1 {color:var(--text)}
+.hero-outline,.outline-text {color:transparent;-webkit-text-stroke:1.3px var(--muted)}
+.micro-heading,.eyebrow,.section-marker,.section-kicker,.text-cta,.text-link,.work-mini-number,.social-arrow{color:var(--mint)}
+.soft-text,.about-copy>p:not(.section-lead),.featured-top p,.social-text small,.contact-note,.contact-heading p,.project-info>p{color:var(--muted)}
+.section-marker:after,.micro-line{background:var(--line)}
+::selection{background:var(--mint);color:var(--theme-contrast)}
+/* Home */
+.mobile-nav{background:var(--bg)}
+.divider-strip,.specialties-section,.connect-section,.site-footer{background:var(--bg2);border-color:var(--line)}
+.ticker,.marquee-track>span,.hero-categories,.hero-intro,.float-sub{color:var(--muted)}
+.signal,.social-card,.specialty-card,.work-mini-grid>a,.portfolio-showcase{border-color:var(--line)}
+.art-lines{border-color:var(--line)}
+.art-halo{background:radial-gradient(circle,color-mix(in srgb,var(--mint) 18%,transparent) 0%,transparent 69%)}
+.poster-shell{background:radial-gradient(ellipse at 33% 30%,var(--theme-poster-bright),var(--theme-poster-deep) 74%);border-color:color-mix(in srgb,var(--mint) 45%,transparent);box-shadow:0 34px 70px var(--theme-shadow)}
+.poster-planet{background:radial-gradient(circle at 35% 29%,#fff5ee 0%,color-mix(in srgb,var(--mint) 20%,#fffaf5) 22%,color-mix(in srgb,var(--mint) 75%,#dfb0bb) 52%,var(--theme-poster-deep) 81%);box-shadow:0 0 68px color-mix(in srgb,var(--mint) 22%,transparent)}
+.poster-head,.poster-footer,.poster-message{color:#fff7f5}
+.art-caption,.float-analytics,.float-label{background:var(--theme-card);color:var(--text);border-color:var(--line);box-shadow:0 20px 40px var(--theme-shadow)}
+.float-title,.float-sub{color:var(--text)}
+.abstract-glyph,.about-stamp{color:color-mix(in srgb,var(--mint) 15%,var(--bg))}
+.abstract-glyph span,.about-stamp span{color:var(--mint)}
+.specialty-card,.social-card,.work-mini-grid>a{background:var(--theme-card);color:var(--text);border-color:var(--line);border-radius:var(--theme-radius)}
+.specialty-card:hover,.social-card:hover,.work-mini-grid>a:hover{background:var(--panel2);border-color:var(--mint)}
+.specialty-top,.specialty-card p,.specialty-bottom,.specialty-top svg,.social-text small{color:var(--muted)}
+.specialty-top svg,.specialty-bottom span{color:var(--mint)}
+.specialty-bottom{border-top-color:var(--line)}
+.portfolio-showcase{background:linear-gradient(135deg,var(--panel2),var(--theme-grad));border-radius:var(--theme-radius)}
+.preview-window{border-color:var(--line)}
+.preview-toolbar{background:var(--theme-poster-deep);color:#fff}
+.showcase-number,.showcase-big em,.showcase-action,.social-icon{color:var(--mint)}
+.showcase-info p{color:var(--muted)}
+.social-icon{background:var(--theme-accent-soft)}
+.site-footer,.footer{border-color:var(--line)}
+.footer-inner>span,.back-top,.footer p,.footer>a:last-child{color:var(--muted)}
+.notice-toast{background:var(--mint);color:var(--theme-contrast)}
+/* Portfolio specific */
+.gradient-text{background:linear-gradient(105deg,var(--text),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent}
+.filter-btn,.project-card,.expertise-card,.analytics-panel,.kpi-card,.chart-container,.analytics-aside,.project-modal {background:var(--theme-card);color:var(--text);border-color:var(--line);border-radius:var(--theme-radius)}
+.filter-btn{background:var(--panel2);color:var(--muted)}
+.filter-btn:hover{color:var(--text);border-color:var(--mint)}
+.project-art:not(.has-photo){background:var(--theme-grad)}
+.project-tag,.chart-option{background:var(--panel2);color:var(--muted)}
+.project-info>p,.expertise-card p,.analytics-title span:not(.analytics-icon),.kpi-caption,.chart-toolbar span,.aside-note,.about-chips span,.contact-inner p:not(.section-kicker){color:var(--muted)}
+.project-overline,.expertise-number,.expertise-tag,.data-bottom span,.kpi-sub,.metric-list span,.chart-labels{color:var(--subtle)}
+.expertise-section,.marquee-border{background:var(--bg2);border-color:var(--line)}
+.expertise-card:hover{background:var(--panel2);border-color:var(--mint)}
+.data-info,.analytics-icon{background:var(--theme-accent-soft);color:var(--mint);border-color:var(--line)}
+.analytics-toolbar,.kpi-card,.chart-container,.analytics-aside,.data-bottom,.metric-list div{border-color:var(--line)}
+.analytics-toolbar,.data-bottom{background:var(--panel)}
+.analytics-aside{background:var(--panel2)}
+.analytics-aside>p:first-of-type,.metric-list strong,.kpi-number{color:var(--text)}
+.aside-topline,.tiny-spark,.data-bottom a,.project-open{color:var(--mint)}
+.chart-option.active{color:var(--theme-contrast);border-color:var(--mint)}
+.contact-section{background:linear-gradient(130deg,var(--theme-grad),var(--bg2));border-color:var(--line)}
+.contact-art .giant-asterisk{color:var(--mint)}
+.contact-art>span{background:var(--mint);color:var(--theme-contrast)}
+.project-modal{box-shadow:0 40px 110px var(--theme-shadow)}
+/* Details adapted across pages */
+:is(.hero, .section, .about-section, .featured-section, .connect-section, .specialties-section) a:hover{transition:color .15s,background .15s}
+:where(.btn,.header-work,.header-work,.social-card,.specialty-card,.portfolio-showcase,.filter-btn,.project-card,.expertise-card,.analytics-panel,.kpi-card,.button-primary,.button-outline,.nav-cta){border-radius:var(--theme-radius)}
+/* dark creative posters intentionally keep high contrast with white writing */
+@media(max-width:800px){.site-header,.site-header.scrolled,.mobile-nav{background:var(--theme-nav)!important}}
+/* Keep the decorative hero artwork in the same brand palette. */
+.creative-poster{background:radial-gradient(circle at 34% 41%,color-mix(in srgb,var(--mint) 45%,transparent),transparent 38%),linear-gradient(130deg,var(--theme-poster-deep),var(--theme-poster-bright));border-color:var(--line)}
+.poster-orb{background:radial-gradient(circle at 38% 33%,#fff3ef,color-mix(in srgb,var(--mint) 25%,white) 22%,color-mix(in srgb,var(--mint) 70%,#2b2230) 57%,var(--theme-poster-deep) 85%)}
+.floating-chip,.insight-widget{background:var(--theme-card);color:var(--text);border-color:var(--line)}
+.widget-title,.widget-footer{color:var(--muted)}
+.widget-round,.chip-circle{background:var(--mint)}
+.float-analytics svg path:first-of-type{fill:color-mix(in srgb,var(--mint) 18%,transparent)}
+.float-analytics svg path:last-of-type{stroke:var(--mint)}
+html[data-theme-mode=light] .poster-message em,html[data-theme-mode=light] .poster-headline em{color:color-mix(in srgb,var(--mint) 28%,white)}
+html[data-theme-mode=light] .poster-shell,html[data-theme-mode=light] .creative-poster{color:#fff}
+html[data-theme-mode=light] .poster-message,html[data-theme-mode=light] .poster-headline{color:#fff7f5}
+html[data-theme-mode=light] .showcase-big{color:var(--text)}
+html[data-theme-mode=light] .preview-image{background:var(--bg2)}
+.site-back-link{color:var(--mint)}
+.widget-graph path:first-of-type{stroke:var(--mint)}
+.widget-graph path:last-of-type{fill:color-mix(in srgb,var(--mint) 12%,transparent)}
