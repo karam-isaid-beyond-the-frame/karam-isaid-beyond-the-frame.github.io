@@ -12,7 +12,7 @@
    if(lookup.get('appearance')?.content?.colors)window.KARAM_SET_THEME_FROM_CMS?.(lookup.get('appearance').content);
    const data=window.KARAM_CMS_DATA;
    for(const key of order){
-     const el=element(key),row=lookup.get(key);if(!el)continue;
+     const el=element(key),row=lookup.get(key);if(!el||key==='instagram-feed')continue;
      let visible=row?.visible!==false;
      if(key==='pricing')visible&&=!!data?.services.length;
      if(page==='website'&&key==='featured'){const ids=lookup.get('featured-carousel')?.content?.options?.project_ids||[];visible&&=!!data?.projects.some(p=>ids.length?!ids.includes(p.id):!p.featured);}
@@ -20,7 +20,7 @@
      if(key==='insights')visible&&=!!window.PORTFOLIO?.campaignData?.length&&!window.PORTFOLIO.campaignDemo;
      el.hidden=!visible;el.style.display=visible?'':'none';
    }
-   const arranged=order.filter(key=>!['navigation','hero','footer'].includes(key)).map((key,i)=>({key,el:element(key),position:lookup.get(key)?.position??i+2})).filter(x=>x.el).sort((a,b)=>a.position-b.position);
+   const arranged=order.filter(key=>!['navigation','hero','footer'].includes(key)).map((key,i)=>({key,el:element(key),position:lookup.get(key)?.position??i+2})).filter(x=>x.el?.parentElement===main).sort((a,b)=>a.position-b.position);
    let next=null;for(const {el}of [...arranged].reverse()){if(el.nextElementSibling!==next)main.insertBefore(el,next);next=el;}
    document.querySelectorAll('header a[href^="#"],nav a[href^="#"]').forEach(link=>{
      const id=link.getAttribute('href').slice(1),key=Object.keys(aliases).find(k=>aliases[k]===id)||id;
@@ -42,7 +42,7 @@
    const strip=main.querySelector('.divider-strip,.marquee-border');if(strip)strip.hidden=element('hero')?.hidden||false;
  }
  function apply(rows){
-   sections=rows.filter(row=>row.page===page&&row.status==='published');window.KARAM_CMS_SECTIONS=sections;
+   sections=rows.filter(row=>row.status==='published'&&(row.page===page||(row.page==='website'&&row.section_key==='instagram-feed')));window.KARAM_CMS_SECTIONS=sections;
    if(page==='portfolio')window.KARAM_FALLBACK_PROJECT_IMAGE=core.url(sections.find(s=>s.section_key==='work')?.content?.media?.project_fallback_image);
    window.dispatchEvent(new CustomEvent('karam:sections',{detail:{page,sections}}));present();
  }
@@ -50,6 +50,7 @@
  for(const event of ['karam:cms','karam:sections','karam:language'])window.addEventListener(event,()=>queueMicrotask(present));
  document.addEventListener('DOMContentLoaded',async()=>{
    present();if(!window.KARAM_CMS_PUBLIC?.enabled)return;
-   try{const rows=await window.KARAM_CMS_PUBLIC.read('cms_page_sections','select=*&page=eq.'+page+'&status=eq.published&order=position.asc');if(!preview)apply(rows);}catch{window.KARAM_CMS_SECTIONS_ERROR=true;}
+   const scope=page==='website'?'page=eq.website':'or=(page.eq.portfolio,and(page.eq.website,section_key.eq.instagram-feed))';
+   try{const rows=await window.KARAM_CMS_PUBLIC.read('cms_page_sections','select=*&'+scope+'&status=eq.published&order=position.asc');if(!preview)apply(rows);}catch{window.KARAM_CMS_SECTIONS_ERROR=true;}
  });
 })();

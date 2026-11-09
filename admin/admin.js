@@ -367,10 +367,11 @@ function renderSectionList(page){
  const warning=state.sectionsError?`<div class="setup-alert">Database update needed: run <code>supabase/upgrade_v4_sections.sql</code> in your Supabase SQL Editor first. ${esc(state.sectionsError)}</div>`:'';
  const content=layoutDraft.map((item,i)=>{
   const def=item.def,pub=sectionRecord(def,'published'),draft=sectionRecord(def,'draft');
+  const fixed=def.instagramPosts||['navigation','footer'].includes(item.key);
   return `<article class="section-admin-item"><div class="section-order">${String(i+1).padStart(2,'0')}</div>
   <div class="section-admin-info"><b>${esc(def.label)}</b><small>${esc(def.description)} · ${def.keys.length} editable texts · EN + AR</small><span>${pub?'● PUBLISHED':'○ ORIGINAL DEFAULT'} ${draft?' · DRAFT SAVED':''}</span></div>
   <label class="section-visibility"><input type="checkbox" data-layout-visible="${esc(def.key)}" ${item.visible?'checked':''}> <span>Visible</span></label>
-  <div class="section-admin-actions"><button type="button" class="action-btn" data-layout-move="${esc(def.key)}" data-direction="-1" ${i===0||['navigation','footer'].includes(item.key)?'disabled':''} aria-label="Move up">↑</button><button type="button" class="action-btn" data-layout-move="${esc(def.key)}" data-direction="1" ${i===layoutDraft.length-1||['navigation','footer'].includes(item.key)?'disabled':''} aria-label="Move down">↓</button>
+  <div class="section-admin-actions"><button type="button" class="action-btn" data-layout-move="${esc(def.key)}" data-direction="-1" ${i===0||fixed?'disabled':''} aria-label="Move up">↑</button><button type="button" class="action-btn" data-layout-move="${esc(def.key)}" data-direction="1" ${i===layoutDraft.length-1||fixed?'disabled':''} aria-label="Move down">↓</button>
   <button type="button" class="btn primary section-edit-button" data-section-edit="${esc(def.page+':'+def.key)}">Edit details ↗</button></div></article>`;
  }).join('');
  return pageHeading(page==='website'?'WEBSITE DESIGN & CONTENT':'PORTFOLIO DESIGN & CONTENT',page==='website'?'Website Sections<span class="wine">.</span>':'Portfolio Sections<span class="wine">.</span>','Show, hide, reorder, and edit every section in Arabic and English. Changes are not public until published.',`<a class="btn secondary" href="${page==='website'?'../index.html':'../portfolio/index.html'}" target="_blank" rel="noopener">Open public page ↗</a>`)+warning+`
@@ -380,7 +381,10 @@ function renderSectionList(page){
 }
 function moveLayout(key,direction){
  if(!layoutDraft)return;
- const i=layoutDraft.findIndex(x=>x.key===key),j=i+direction;
+ const i=layoutDraft.findIndex(x=>x.key===key);
+ if(layoutDraft[i]?.def.instagramPosts)return;
+ let j=i+direction;
+ if(layoutDraft[j]?.def.instagramPosts)j+=direction;
  if(['navigation','footer'].includes(key)||['navigation','footer'].includes(layoutDraft[j]?.key))return;
  if(i<0||j<0||j>=layoutDraft.length)return;
  [layoutDraft[i],layoutDraft[j]]=[layoutDraft[j],layoutDraft[i]];
@@ -410,7 +414,8 @@ function openSectionEditor(key){
  }).join('')}</div></fieldset>`).join('');
  const mediaFields=def.media.length?`<fieldset class="locale-fields"><legend>Section Images & Video</legend><div class="fields">${def.media.map(m=>`<label class="full">${esc(m.label)}<div class="media-field"><input name="media_${m.key}" value="${esc(content.media?.[m.key]||'')}" placeholder="https://... or choose from Media Library"><button type="button" data-media-pick="media_${m.key}">Browse</button></div></label>`).join('')}</div></fieldset>`:'';
  $('#sectionEditorTitle').textContent=def.label+' / '+(def.page==='website'?'Website':'Portfolio');
- $('#sectionEditorFields').innerHTML=`<div class="section-editor-help">Changes to this section do not affect other sections. Empty fields keep the original built-in text. <a href="${def.page==='website'?'../index.html':'../portfolio/index.html'}" target="_blank" rel="noopener">View page ↗</a></div><div class="fields"><label>Position<input name="position" type="number" min="0" max="100" value="${data?.position??def.position}"></label><label class="toggle-label"><input type="checkbox" name="visible" ${data?.visible!==false?'checked':''}> Show this section publicly</label></div>`+groups+mediaFields+sectionExtraFields(def,content);
+ const position=def.instagramPosts?`<input name="position" type="hidden" value="${data?.position??def.position}">`:`<label>Position<input name="position" type="number" min="0" max="100" value="${data?.position??def.position}"></label>`;
+ $('#sectionEditorFields').innerHTML=`<div class="section-editor-help">${def.instagramPosts?'Instagram posts and reels appear in their matching sections on both pages.':'Changes to this section do not affect other sections.'} Empty fields keep the original built-in text. <a href="${def.page==='website'?'../index.html':'../portfolio/index.html'}" target="_blank" rel="noopener">View page ↗</a></div><div class="fields">${position}<label class="toggle-label"><input type="checkbox" name="visible" ${data?.visible!==false?'checked':''}> Show this section publicly</label></div>`+groups+mediaFields+sectionExtraFields(def,content);
  $('#sectionEditorMessage').textContent='';$('#sectionEditorDialog').showModal();
 }
 async function saveSectionEditor(publish){
@@ -427,6 +432,7 @@ async function saveSectionEditor(publish){
  for(const link of def.links||[]){const v=form.elements.namedItem('link_'+link.key)?.value.trim()||'';if(v&&!window.KARAM_CMS_CORE.url(v,{link:true})){$('#sectionEditorMessage').textContent='Use HTTPS or a local #section destination.';return;}if(v)content.links[link.key]=v;else delete content.links[link.key];}
  if(def.projectSelection)content.options.project_ids=[...form.querySelectorAll('[name="selected_project"]:checked')].map(el=>el.value);
  if(def.autoplayOption)content.options.autoplay=!!form.elements.namedItem('opt_autoplay')?.checked;
+ if(!readInstagramSection(def,form,content))return;
  const status=publish?'published':'draft';
  const input={page:def.page,section_key:def.key,status,position:Number(form.elements.namedItem('position').value)||0,visible:form.elements.namedItem('visible').checked,content,updated_at:new Date().toISOString()};
  const btn=publish?$('#sectionPublish'):$('#sectionSaveDraft');btn.disabled=true;
@@ -513,7 +519,25 @@ function sectionExtraFields(def,content){
  const selectable=state.projects.filter(p=>p.status==='published'&&(!def.videoSelection||/\.(mp4|webm|m4v|ogv)(?:[?#]|$)/i.test(p.video_url||'')));
  const choices=def.projectSelection?`<fieldset class="locale-fields"><legend>Project selection</legend><p>${def.videoSelection?'Choose published projects with a direct MP4, WebM, M4V or OGV video. Leave empty to include all published videos.':'Choose published projects. Leave empty for featured projects (showcase) or available video/comparison projects.'} Their display order follows Projects → Display order.</p>${selectable.map(p=>`<label class="toggle-label"><input name="selected_project" type="checkbox" value="${esc(p.slug)}" ${selected.includes(p.slug)?'checked':''}> ${esc(p.title_en)}</label>`).join('')||'<p>Publish a real project'+(def.videoSelection?' with a video':'')+' first.</p>'}</fieldset>`:'';
  const auto=def.autoplayOption?`<fieldset class="locale-fields"><legend>Playback</legend><label class="toggle-label"><input type="checkbox" name="opt_autoplay" ${content.options?.autoplay!==false?'checked':''}> Auto-play the reel on screen (muted, stops when the visitor scrolls away)</label></fieldset>`:'';
- return (links?'<fieldset class="locale-fields"><legend>Button destinations</legend><div class="fields">'+links+'</div></fieldset>':'')+choices+auto;
+ const manual=content.options?.instagram_posts;
+ const posts=def.instagramPosts?`<fieldset class="locale-fields"><legend>Instagram cards</legend><label class="toggle-label"><input name="ig_manual" type="checkbox" ${Array.isArray(manual)?'checked':''}> Use this list instead of the live or built-in feed</label><label>One card per line: Instagram URL | cover URL | image description<textarea name="ig_posts" rows="9" aria-describedby="igPostsHelp">${esc((Array.isArray(manual)?manual:window.KARAM_SITE?.instagramPosts||[]).map(p=>[p.link,p.img,p.alt||''].join(' | ')).join('\n'))}</textarea></label><small id="igPostsHelp">Up to 12 public posts or reels. Use a full Instagram link and an HTTPS image URL or a local assets path. Paste cover URLs from Media Library.</small></fieldset>`:'';
+ return (links?'<fieldset class="locale-fields"><legend>Button destinations</legend><div class="fields">'+links+'</div></fieldset>':'')+choices+auto+posts;
+}
+function readInstagramSection(def,form,content){
+ if(!def.instagramPosts)return true;
+ if(!form.elements.namedItem('ig_manual').checked){delete content.options.instagram_posts;return true;}
+ const lines=form.elements.namedItem('ig_posts').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+ const error=message=>{$('#sectionEditorMessage').textContent=message;return false;};
+ if(!lines.length||lines.length>12)return error('Enter 1–12 Instagram cards, or turn off the custom list.');
+ const seen=new Set(),posts=[];
+ for(const [i,line] of lines.entries()){
+  const [link,img,...description]=line.split('|').map(s=>s.trim());
+  const post=window.KARAM_CMS_CORE.media(link);
+  if(post?.type!=='instagram'||!window.KARAM_CMS_CORE.url(img))return error('Check the Instagram and cover URLs on line '+(i+1)+'.');
+  if(seen.has(post.url))return error('Duplicate Instagram post on line '+(i+1)+'.');
+  seen.add(post.url);posts.push({link:post.url,img,alt:description.join(' | ').slice(0,180)});
+ }
+ content.options.instagram_posts=posts;return true;
 }
 function currentSectionDraft(){
  const def=sectionEditorDef,form=$('#sectionEditorForm');if(!def)return null;
@@ -524,6 +548,7 @@ function currentSectionDraft(){
  for(const link of def.links||[]){const value=form.elements.namedItem('link_'+link.key)?.value.trim();if(value)content.links[link.key]=value;}
  if(def.projectSelection)content.options.project_ids=[...form.querySelectorAll('[name="selected_project"]:checked')].map(el=>el.value);
  if(def.autoplayOption)content.options.autoplay=!!form.elements.namedItem('opt_autoplay')?.checked;
+ if(!readInstagramSection(def,form,content))return null;
  return {page:def.page,section_key:def.key,status:'published',position:Number(form.elements.namedItem('position').value)||0,visible:form.elements.namedItem('visible').checked,content};
 }
 function previewPage(page){
@@ -540,7 +565,7 @@ function previewPage(page){
  const sectionMap=new Map();
  for(const row of state.sections.filter(r=>r.status==='published'))sectionMap.set(row.page+':'+row.section_key,{...row});
  for(const row of state.sections.filter(r=>r.status==='draft'))sectionMap.set(row.page+':'+row.section_key,{...row,status:'published'});
- if($('#sectionEditorDialog').open){const row=currentSectionDraft();if(row)sectionMap.set(row.page+':'+row.section_key,row);}
+ if($('#sectionEditorDialog').open){const row=currentSectionDraft();if(!row)return;sectionMap.set(row.page+':'+row.section_key,row);}
  if(layoutDraft&&layoutDraft.page===page&&!$('#sectionEditorDialog').open){layoutDraft.forEach((item,index)=>{const key=page+':'+item.key;const old=sectionMap.get(key);sectionMap.set(key,{...old,page,section_key:item.key,status:'published',position:index,visible:item.visible,content:old?.content||{}});});}
  const settings={...(state.settingsDraft?.content||state.settings?.content||{})};
  if($('#settingsForm'))for(const [key]of SETTINGS_FIELDS){if(key!=='section')settings[key]=$('#settingsForm').elements.namedItem(key).value.trim();}

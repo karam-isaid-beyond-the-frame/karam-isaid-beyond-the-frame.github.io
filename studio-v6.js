@@ -548,28 +548,55 @@
   }
 
   /* ---------------- 11. live Instagram feed (optional, via a behold.so JSON feed) ---------------- */
-  const IG_T = { en: { igKicker: 'LIVE FROM INSTAGRAM', igTitle: 'Fresh from', igTitleEm: 'the feed.', igIntro: 'My newest posts appear here automatically.', igCta: 'Follow on Instagram ↗', reel: 'Reel' }, ar: { igKicker: 'مباشر من إنستغرام', igTitle: 'جديد', igTitleEm: 'من الفيد.', igIntro: 'آخر منشوراتي بتظهر هون تلقائيًا.', igCta: 'تابعني على إنستغرام ↖', reel: 'ريل' } };
-  let ig = { url: '', items: null, busy: false };
-  async function renderIg() {
-    const sec = $('#instagram-feed'), host = $('[data-v6-ig]'); if (!sec || !host) return;
-    const url = core()?.url(data().settings?.instagram_feed_url);
-    if (!url || !/^https:\/\/feeds\.behold\.so\/[A-Za-z0-9_-]+\/?$/.test(url)) { sec.classList.add('v6-empty'); return; }
-    if (ig.url !== url && !ig.busy) {
-      ig = { url, items: null, busy: true };
-      try {
-        const res = await fetch(url, { cache: 'no-store' }); const j = await res.json(); const posts = Array.isArray(j) ? j : (j.posts || []);
-        const okImg = (u) => typeof u === 'string' && /^https:\/\//.test(u);
-        ig.items = posts.filter((p) => typeof p.permalink === 'string' && /^https:\/\/(www\.)?instagram\.com\//.test(p.permalink)).map((p) => ({ link: p.permalink, img: [p.sizes?.medium?.mediaUrl, p.sizes?.small?.mediaUrl, p.thumbnailUrl, p.mediaUrl].find(okImg) || '', video: p.mediaType === 'VIDEO', alt: p.altText || (p.prunedCaption || p.caption || '').slice(0, 100) })).filter((p) => p.img).slice(0, 12);
-      } catch { ig.items = []; }
-      ig.busy = false;
+  const IG_T = {
+    en: { igKicker: 'FROM INSTAGRAM', igTitle: 'Social posts', igTitleEm: '', igIntro: 'Selected visuals and posts. Open a cover to see the original.', igCta: 'Follow on Instagram ↗', igReelsTitle: 'Instagram Reels', igReelsIntro: 'Short-form videos from my feed.', reel: 'Watch on Instagram', post: 'Instagram post' },
+    ar: { igKicker: 'من إنستغرام', igTitle: 'منشورات وتصاميم', igTitleEm: '', igIntro: 'مختارات من تصاميمي ومنشوراتي. افتح أي غلاف لعرض المنشور الأصلي.', igCta: 'تابعني على إنستغرام ↖', igReelsTitle: 'ريلز إنستغرام', igReelsIntro: 'فيديوهات قصيرة من حسابي.', reel: 'شاهد على إنستغرام', post: 'منشور إنستغرام' }
+  };
+  let ig = { url: '', pending: null };
+  function instagramCards(source) {
+    const cards = new Map();
+    for (const p of Array.isArray(source) ? source : []) {
+      const post = core()?.media(p?.link), img = core()?.url(p?.img);
+      if (!img || post?.type !== 'instagram' || cards.has(post.url)) continue;
+      cards.set(post.url, { link: post.url, img, video: post.kind === 'video' || p.video === true, alt: typeof p.alt === 'string' ? p.alt.trim().slice(0, 180) : '' });
+      if (cards.size === 12) break;
     }
-    if (!ig.items || !ig.items.length) { sec.classList.add('v6-empty'); return; }
-    sec.classList.remove('v6-empty'); sec.hidden = false;
+    return [...cards.values()];
+  }
+  async function renderIg() {
+    const groups = $$('[data-v6-ig]');
+    if (!groups.length) return;
+    const saved = row('instagram-feed');
+    if (saved?.visible === false) {
+      groups.forEach(group => { group.hidden = true; });
+      return;
+    }
+    const manual = saved?.content?.options?.instagram_posts;
+    const url = core()?.url(data().settings?.instagram_feed_url);
+    let items = instagramCards(Array.isArray(manual) ? manual : window.KARAM_SITE?.instagramPosts);
+    if (!Array.isArray(manual) && /^https:\/\/feeds\.behold\.so\/[A-Za-z0-9_-]+\/?$/.test(url || '')) {
+      if (ig.url !== url) ig = { url, pending: fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(6000) }).then(async res => {
+        if (!res.ok) return [];
+        const j = await res.json(), posts = Array.isArray(j) ? j : j?.posts;
+        return Array.isArray(posts) ? posts.map(p => ({ link: p?.permalink, img: [p?.sizes?.medium?.mediaUrl, p?.sizes?.small?.mediaUrl, p?.thumbnailUrl, p?.mediaUrl].find(x => /^https:\/\//.test(x || '')), video: p?.mediaType === 'VIDEO', alt: p?.altText || p?.prunedCaption || p?.caption })) : [];
+      }).catch(() => []) };
+      const remote = await ig.pending;
+      if (ig.url !== url || core()?.url(data().settings?.instagram_feed_url) !== url || row('instagram-feed') !== saved) return;
+      items = instagramCards([...remote, ...items]);
+    }
     const t = text('instagram-feed', IG_T), l = lang();
-    const profile = core()?.url(window.KARAM_SITE?.instagram || '', { link: true }) || ig.items[0].link;
-    host.innerHTML = `<div class="v6-head"><div><p class="v6-kicker">${esc(t('igKicker'))}</p><h2 id="v6IgTitle" class="v6-h2">${esc(t('igTitle'))} <em>${esc(t('igTitleEm'))}</em></h2></div><p class="v6-lead">${esc(t('igIntro'))}</p></div>
-      <div class="v6-ig-rail">${ig.items.map((p) => `<a class="v6-ig-item" href="${esc(p.link)}" target="_blank" rel="noopener"><img src="${esc(p.img)}" alt="${esc(p.alt)}" loading="lazy">${p.video ? `<span class="v6-ig-badge">▶ ${esc(IG_T[l].reel)}</span>` : ''}</a>`).join('')}</div>
-      <a class="v6-chip v6-ig-cta" href="${esc(profile)}" target="_blank" rel="noopener">${esc(t('igCta'))}</a>`;
+    const profile = core()?.url(window.KARAM_SITE?.instagram || '', { link: true }) || items[0]?.link;
+    for (const group of groups) {
+      const reels = group.dataset.v6Ig === 'reels';
+      const cards = items.filter(item => item.video === reels);
+      group.hidden = cards.length === 0;
+      if (group.hidden) { group.replaceChildren(); continue; }
+      const heading = reels ? t('igReelsTitle') : [t('igTitle'), t('igTitleEm')].filter(Boolean).join(' ');
+      const intro = t(reels ? 'igReelsIntro' : 'igIntro');
+      group.innerHTML = `<div class="v6-ig-heading">${reels ? '' : `<p class="v6-kicker">${esc(t('igKicker'))}</p>`}<h3 id="${esc(group.id)}-title">${esc(heading)}</h3><p>${esc(intro)}</p></div>
+        <div class="v6-ig-rail">${cards.map((p, i) => `<a class="v6-ig-item" href="${esc(p.link)}" target="_blank" rel="noopener"><img src="${esc(p.img)}" alt="${esc(p.alt || `${IG_T[l].post} ${i + 1}`)}" loading="lazy" decoding="async">${reels ? `<span class="v6-ig-badge"><span aria-hidden="true">▶</span> ${esc(IG_T[l].reel)}</span>` : ''}</a>`).join('')}</div>
+        ${!reels && profile ? `<a class="v6-chip v6-ig-cta" href="${esc(profile)}" target="_blank" rel="noopener">${esc(t('igCta'))}</a>` : ''}`;
+    }
   }
 
   /* ---------------- 12. scroll motion for every section + reading progress ---------------- */
@@ -577,7 +604,7 @@
   const MOTION = [
     ['title', 'main > section:not(.hero):not(#story):not(#clay-3d) h2, #v6-pdf h2'],
     ['text', 'main > section:not(.hero):not(#story):not(#clay-3d) :is(.section-marker,.v2-eyebrow,.ki-kicker,.v6-kicker,.section-kicker,.v6-lead,.section-lead,.connect-kicker,.section-heading > p,.v2-section-heading > p)'],
-    ['card', ':is(#expertise .specialty-card, #expertise .expertise-card, .ki-price-card, .social-card, .process-list details, #work .project-card, .v6-wait-card, #about .about-copy, #about .about-right, #project-brief .brief-form, .v6-prompt, .v6-chips, .v6-pdf-card, .v6-ig-item, #v5Toolkit, #featured article)'],
+    ['card', ':is(#expertise .specialty-card, #expertise .expertise-card, .ki-price-card, .social-card, .process-list details, #work .project-card, .v6-wait-card, #about .about-copy, #about .about-right, #project-brief .brief-form, .v6-prompt, .v6-chips, .v6-pdf-card, #v5Toolkit, #featured article)'],
     ['img', ':is(.experience-about-photo, #creative-lab .lab-stage, #creative-lab .compare-stage, #showreel .reel-frame)']
   ];
   function setupMotion() {
@@ -620,11 +647,11 @@
       try { renderStory(); } catch (e) { console.warn('v6 story', e); }
       try { renderClay(); } catch (e) { console.warn('v6 clay', e); }
       try { setupFeed(); } catch (e) { console.warn('v6 feed', e); }
-      renderIg().catch((e) => console.warn('v6 instagram', e));
     } else {
       try { setupSquares(); } catch (e) { console.warn('v6 squares', e); }
       try { renderPdf(); } catch (e) { console.warn('v6 pdf', e); }
     }
+    renderIg().catch((e) => console.warn('v6 instagram', e));
     decorate();
     try { setupMotion(); } catch (e) { console.warn('v6 motion', e); }
     updateParallax();

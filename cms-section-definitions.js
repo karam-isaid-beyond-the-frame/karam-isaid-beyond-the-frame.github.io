@@ -952,11 +952,11 @@ window.KARAM_SECTION_DEFS = [
       links: [{ key: 'archive_url', label: 'Archive button destination (default: Adams Clay project)' }]
     }
     ,{
-      page: 'website', key: 'instagram-feed', label: 'Latest from Instagram (live feed)',
-      description: 'Shows your newest Instagram posts automatically once a feed URL is set in Global Settings',
-      keys: ['igKicker', 'igTitle', 'igTitleEm', 'igIntro', 'igCta'],
-      defaults: { igKicker: 'LIVE FROM INSTAGRAM', igTitle: 'Fresh from', igTitleEm: 'the feed.', igIntro: 'My newest posts appear here automatically.', igCta: 'Follow on Instagram ↗' },
-      media: [], links: []
+      page: 'website', key: 'instagram-feed', label: 'Instagram posts & reels',
+      description: 'Shared across the homepage and portfolio. Posts appear under Projects and reels appear under Motion.',
+      keys: ['igKicker', 'igTitle', 'igTitleEm', 'igIntro', 'igCta', 'igReelsTitle', 'igReelsIntro'],
+      defaults: { igKicker: 'FROM INSTAGRAM', igTitle: 'Social posts', igTitleEm: '', igIntro: 'Selected visuals and posts. Open a cover to see the original.', igCta: 'Follow on Instagram ↗', igReelsTitle: 'Instagram Reels', igReelsIntro: 'Short-form videos from my feed.' },
+      media: [], links: [], instagramPosts: true
     }
   ];
   add.forEach(function (d) { if (!defs.some(function (x) { return x.page === d.page && x.key === d.key; })) defs.push(d); });

@@ -6,6 +6,15 @@ window.KARAM_SITE = {
   name: 'Karam Isaid',
   linkedin: 'https://www.linkedin.com/in/karam-isaid-51a42137b',
   instagram: 'https://www.instagram.com/itskaramisaid/', // example: 'https://www.instagram.com/YOUR_USERNAME/'
+  // Recent public posts, newest first. The Instagram section in Admin can replace this list.
+  instagramPosts: [
+    { link: 'https://www.instagram.com/p/DfXOwd-uEqm/', img: '/assets/instagram/latest/DfXOwd-uEqm.jpg', alt: 'Karam Isaid’s text graphic — November 5, 2026' },
+    { link: 'https://www.instagram.com/p/DfUqs0GDk8P/', img: '/assets/instagram/latest/DfUqs0GDk8P.jpg', alt: 'Karam Isaid’s Instagram photo — November 4, 2026' },
+    { link: 'https://www.instagram.com/reel/DfPQ41lO0S6/', img: '/assets/instagram/latest/DfPQ41lO0S6.jpg', alt: 'Cover of Karam Isaid’s reel — November 2, 2026' },
+    { link: 'https://www.instagram.com/p/DfMu-GzDgsz/', img: '/assets/instagram/latest/DfMu-GzDgsz.jpg', alt: 'Karam Isaid’s Instagram photo — November 1, 2026' },
+    { link: 'https://www.instagram.com/p/DfKf5kMunYl/', img: '/assets/instagram/latest/DfKf5kMunYl.jpg', alt: 'Karam Isaid’s graphic of a phone screen — October 31, 2026' },
+    { link: 'https://www.instagram.com/reel/DfFcDFcOGBr/', img: '/assets/instagram/latest/DfFcDFcOGBr.jpg', alt: 'Cover of Karam Isaid’s reel — October 29, 2026' }
+  ],
   email: 'karamraed400@gmail.com',     // example: 'yourname@gmail.com' (without mailto:)
   photo: '',     // optional image path: 'assets/karam-photo.jpg'
   portfolio: 'portfolio/index.html',

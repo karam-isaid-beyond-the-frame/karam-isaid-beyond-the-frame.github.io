@@ -5,3 +5,5 @@ Disallow: /work/
 Disallow: /tests/
 Disallow: /supabase/
 Disallow: /*?cms-preview=1
+
+Sitemap: https://karam-isaid-beyond-the-frame.github.io/sitemap.xml
