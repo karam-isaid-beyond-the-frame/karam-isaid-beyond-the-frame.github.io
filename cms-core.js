@@ -16,9 +16,20 @@
     return {type:/\.(mp4|webm|m4v|ogv)$/i.test(parsed.pathname)?'video':'image',url:safe};
   }
   function brandMark(value){try{return /(?:^|\/|[-_])(logo|wordmark|monogram)(?:[-_.]|$)/i.test(new URL(url(value)).pathname);}catch{return false;}}
+  function projectMediaUrl(value) {
+    const safe = url(value);
+    if (!safe) return '';
+    const mediaUrl = new URL(safe);
+    // These project media directories ship with the static site.
+    if (mediaUrl.origin === 'https://karam-isaid-portfolio.vercel.app' &&
+        /^\/assets\/(?:brand\/(?:posters|reels)|instagram\/(?:personal|adams-clay|social-seo))\//.test(mediaUrl.pathname)) {
+      return new URL(mediaUrl.pathname.slice(1) + mediaUrl.search + mediaUrl.hash, rootURL).href;
+    }
+    return safe;
+  }
   function project(p) {
     const bi = key => ({en:text(p[key+'_en']),ar:text(p[key+'_ar'])||text(p[key+'_en'])});
-    return {id:text(p.slug),recordId:p.id,category:text(p.category),featured:p.featured===true,project_kind:['client','personal','concept'].includes(p.project_kind)?p.project_kind:'concept',position:Number(p.position)||0,year:text(p.year),accent:'plum',title:bi('title'),type:bi('type'),short:bi('summary'),challenge:bi('challenge'),solution:bi('solution'),results:bi('results'),cover:url(p.cover_url),video:url(p.video_url),before:url(p.before_url),after:url(p.after_url),gallery:Array.isArray(p.gallery_urls)?p.gallery_urls.map(v=>url(v)).filter(Boolean):[],tags:Array.isArray(p.tags)?p.tags.filter(v=>typeof v==='string'):[]};
+    return {id:text(p.slug),recordId:p.id,category:text(p.category),featured:p.featured===true,project_kind:['client','personal','concept'].includes(p.project_kind)?p.project_kind:'concept',position:Number(p.position)||0,year:text(p.year),accent:'plum',title:bi('title'),type:bi('type'),short:bi('summary'),challenge:bi('challenge'),solution:bi('solution'),results:bi('results'),cover:projectMediaUrl(p.cover_url),video:projectMediaUrl(p.video_url),before:projectMediaUrl(p.before_url),after:projectMediaUrl(p.after_url),gallery:Array.isArray(p.gallery_urls)?p.gallery_urls.map(projectMediaUrl).filter(Boolean):[],tags:Array.isArray(p.tags)?p.tags.filter(v=>typeof v==='string'):[]};
   }
   function price(s,lang='en') {
     const amount=Number(s.price_amount);
