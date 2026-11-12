@@ -1,7 +1,8 @@
 /* Shared public/admin validation; Supabase RLS is the access boundary. */
 (() => {
   'use strict';
-  const rootURL = new URL('.', document.querySelector('script[src$="cms-core.js"]')?.src || location.href);
+  const script = document.currentScript || document.querySelector('script[src$="cms-core.js"]');
+  const rootURL = new URL('.', script?.src || location.href);
   const text = value => typeof value === 'string' ? value.trim() : '';
   function url(value, { link = false } = {}) {
     const v = text(value);
