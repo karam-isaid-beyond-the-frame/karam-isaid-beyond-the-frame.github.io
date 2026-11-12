@@ -36,7 +36,7 @@
  }
  function playCard(index){
   const card=cards[index];if(!card)return;feedback.textContent='';go(index);
-  card.el.setAttribute('aria-busy','true');card.poster.hidden=true;card.play.hidden=true;card.video.hidden=false;
+  card.el.setAttribute('aria-busy','true');card.play.hidden=true;card.video.hidden=false;
   if(card.video.getAttribute('src')!==items[index].video||card.video.error){card.video.src=items[index].video;card.video.load();}
   const promise=card.video.play();
   if(promise)promise.catch(error=>{if(index===active&&error.name!=='AbortError'){card.el.removeAttribute('aria-busy');stopCard(card);feedback.textContent=copy[language()].error;}});
@@ -50,7 +50,11 @@
   const play=document.createElement('button');play.className='reels-watch';play.type='button';
   const mark=document.createElement('span');mark.className='reels-play-icon';if(window.KARAM_ICONS)mark.append(window.KARAM_ICONS.create('play'));else mark.textContent='▶';play.append(mark);
   play.addEventListener('click',()=>playCard(index));
-  video.addEventListener('canplay',()=>el.removeAttribute('aria-busy'));
+  video.addEventListener('playing',()=>{
+   if(video.hidden)return;
+   poster.hidden=true;
+   el.removeAttribute('aria-busy');
+  });
   video.addEventListener('error',()=>{el.removeAttribute('aria-busy');if(index===active){stopCard(card);feedback.textContent=copy[language()].error;}});
   video.addEventListener('play',()=>{if(index!==active)setActive(index);});
   const caption=document.createElement('div');caption.className='reels-caption';

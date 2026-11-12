@@ -408,7 +408,7 @@
     labelSound(); addEventListener('karam:language', labelSound);
     sound.addEventListener('click', () => { feed.soundOn = !feed.soundOn; labelSound(); const v = activeCard()?.querySelector('video'); if (v) v.muted = !feed.soundOn; });
     const activeCard = () => track.querySelector('.reels-card.is-active');
-    const autoplayOn = () => row('video-reels')?.content?.options?.autoplay !== false && !reduce;
+    const autoplayOn = () => row('video-reels')?.content?.options?.autoplay === true && !reduce;
     const sync = () => {
       const card = activeCard(); if (!card) return;
       const img = card.querySelector('.reels-poster'); const src = img?.currentSrc || img?.src || '';

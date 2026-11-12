@@ -137,6 +137,7 @@ h3{line-height:1.3}
 .project-info h3{font-size:25px}
 .project-info p{font-size:16px;line-height:1.7}
 .project-overline,.project-tag{font-size:12px;letter-spacing:0;text-transform:none}
+.project-overline{color:var(--muted)}
 .filter-btn{min-height:44px;font-size:14px}
 .project-open{min-height:44px;font-size:14px}
 .hero-art#kiPortfolioHeroArt{background-color:var(--panel)!important;box-shadow:none;border:0;border-radius:6px}

@@ -80,7 +80,7 @@ html[dir="rtl"] .v6-send svg{transform:scaleX(-1)}
 .v6-wait-card img{width:80px;height:104px;object-fit:cover;border-radius:16px;filter:saturate(.7)}
 .v6-wait-card span{display:flex;flex-direction:column;gap:6px;min-width:0}
 .v6-wait-card b{font-family:Manrope,Tajawal,sans-serif;font-size:18px;color:var(--text)}
-.v6-wait-card small{font-size:13px;color:var(--muted)}
+.v6-wait-card small{font-size:13px;color:var(--text)}
 .v6-think{display:flex;gap:20px;align-items:flex-start;padding:28px 32px;border-radius:26px}
 .v6-avatar{display:grid;place-items:center;flex:none;width:46px;height:46px;border-radius:50%;background:var(--text);color:var(--bg);font:800 17px Manrope,sans-serif}
 .v6-think ol{list-style:none;margin:0;padding:4px 0 0;display:grid;gap:14px;font-size:19px;color:var(--text)}
